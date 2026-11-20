@@ -39,6 +39,7 @@ export default function AdvancedNetworkInspector() {
     const handleNewRequest = (data: RequestRecord) => {
       setRequests(prev => [data, ...prev]);
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleUpdateRequest = (data: { id: string; response?: any; error?: string }) => {
       setRequests(prev => prev.map(req =>
         req.id === data.id
@@ -65,13 +66,6 @@ export default function AdvancedNetworkInspector() {
     return true;
   });
 
-  const handleReplay = async (request: RequestRecord) => {
-    try {
-      await apiClient.replayRequest(request.id);
-    } catch (err) {
-      console.error('Failed to replay request:', err);
-    }
-  };
 
   const copyAsCurl = useCallback((request: RequestRecord) => {
     const headers = Object.entries(request.headers || {})
